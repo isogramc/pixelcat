@@ -1,17 +1,55 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Pixel Cat</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="css/styles.css" />
-      </head>
-      <body>
-        <div class="main-content">
-          <h1 class="pixelify-sans-headers">The Adventures of <span>PixelCat</span></h1>
-          <div id="game"></div>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!-- stylesheets goes here -->
+    <link rel="stylesheet" href="css/styles.css" />
+    <title>Pixel Cat</title>
+  </head>
+  <body>
+    <main>
+      <div class="main-content">
+        <div>
+          <h1 class="pixelify-sans-headers">
+            The Adventures of <span>PixelCat</span>
+          </h1>
         </div>
-        <script src="js/obstacle.js"></script>
-        <script src="js/player.js"></script>
-        <script src="js/game.js"></script>
-      </body>
+        <div class="circle">
+          <!-- #game-intro is initially shown on the game start screen -->
+          <div id="game-intro">
+            <img src="./images/logo.png" alt="" class="logo-img" />
+            <br />
+            <button id="start-button">Start Game</button>
+            <p>Use the left and right arrow to move!</p>
+            <img src="./images/arrows.png" alt="" class="arrows-img" />
+          </div>
+
+          <div id="game-container">
+            <div>
+              <h2>Stats</h2>
+              <p>Lives: <span id="lives">♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥</span></p>
+              <p>Score: <span id="score">0</span></p>
+            </div>
+            <!-- #game-screen is initially hidden using CSS style display: none -->
+            <div id="game-screen"></div>
+          </div>
+
+          <!-- #game-end is initially hidden using CSS style display: none -->
+          <div id="game-end">
+            <img src="/images/wings.png" alt="" class="wings-img" />
+            <h1>Game Over</h1>
+            <br />
+            <button id="restart-button">Restart</button>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- javascript goes here -->
+    <script src="js/obstacle.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/script.js"></script>
+  </body>
 </html>
