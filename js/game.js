@@ -12,6 +12,16 @@ class Game {
     this.lives = 3;
     this.gameIntervalId;
     this.gameLoopFrequency = Math.round(1000 / 60); // 60fps
+
+    this.enemy = new Enemy(
+      this.gameScreen,
+      200,
+      20,
+      100,
+      150,
+      "/images/chef_sml.png"
+    );
+
   }
 
   start() {
@@ -47,5 +57,29 @@ class Game {
     this.gameScreen.style.display = "none";
     // Show end game screen
     this.gameEndScreen.style.display = "block";
+  }
+
+  update() {
+    console.log("update");
+
+    for (let i = 0; i < this.obstacles.length; i++) {
+      const obstacle = this.obstacles[i];
+      obstacle.move();
+
+      
+    }
+
+    // If the lives are 0, end the game
+    if (this.lives === 0) {
+      this.endGame();
+    }
+
+    // Create a new obstacle based on a random probability
+    // when there is no other obstacles on the screen
+    if (Math.random() > 0.98 && this.obstacles.length < 1) {
+      this.obstacles.push(new Obstacle(this.gameScreen));
+    }
+
+
   }
 }
