@@ -11,8 +11,8 @@ body {
 
 h1{
    font-size: 5rem;
-   line-height: 0;
-   padding: 2rem;
+   padding-top: 2rem;
+   flex-wrap: wrap;
 }
 
 .pixelify-sans-headers {
@@ -20,6 +20,9 @@ h1{
    font-optical-sizing: auto;
    font-weight: 400;
    font-style: normal;
+   line-height: 60px;
+   margin-top: -20px;
+   text-align: center;
  }
 
 .main-content{
@@ -36,8 +39,8 @@ h1{
 }
 
 .circle{
+   display: none;
    position: relative;
-   display: flex;
    flex-direction: column;
    align-items: center;
    justify-content: center;
@@ -47,12 +50,28 @@ h1{
    background-color: rgb(80, 80, 211);
 }
 
+#logo-background{
+   position: relative;
+   display: flex;
+   width: 700px;
+   height: 700px;
+   color: white;
+   border-radius: 10px;
+   background-color: rgb(80, 80, 211);
+   background-image: url("/images/PixelCat.png");
+   background-repeat: no-repeat;
+  background-position: center top;
+  background-size: 500px auto;
+   justify-content: center;
+}
+
 .wings-img{ 
    width: 200px;
 }
 
 .arrows-img{
-   width: 200px;
+   width: 150px;
+   padding: 15px;
 }
 
 #game-end {
@@ -61,8 +80,9 @@ h1{
 
 #game-container {
    width: 100vw;
-   padding: 20px 0px;
-   display: inl;
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
  }
 
  #game-screen {
@@ -84,4 +104,30 @@ h1{
    box-shadow: 0;
    border-radius: 5px;
    margin-bottom: 20px;
+ }
+ #game-container .stats{
+   padding: 15px;
+   background-color: rgb(68, 51, 122);
+   color: white;
+ }
+
+ #game-intro{
+   display: flex;
+   flex-direction: column;
+   align-items: flex-end;
+   justify-content: flex-end;
+ }
+ #game-intro button{
+   align-self: center;
+ }
+
+ .game-intro-text{
+   display: flex;
+   flex-direction: row;
+ }
+
+ .game-intro-text p {
+   width: 200px;
+   font-size: 12px;
+   padding: 15px;
  }

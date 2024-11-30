@@ -16,18 +16,25 @@
             The Adventures of <span>PixelCat</span>
           </h1>
         </div>
-        <div class="circle">
+        <div id="logo-background">
+
+        
+        <div class="circle"></div>
           <!-- #game-intro is initially shown on the game start screen -->
           <div id="game-intro">
             <img src="./images/logo.png" alt="" class="logo-img" />
             <br />
-            <button id="start-button">Start Game</button>
-            <p>Use the left and right arrow to move!</p>
+            <div class="game-intro-text">
+              <p>PixelCat is trying to escape from the mad chef's kitchen. 
+                Use the arrow keys to avoid the obstacles and to collect tokens that opens the door for him.</p>
             <img src="./images/arrows.png" alt="" class="arrows-img" />
           </div>
+            <button id="start-button">Start Game</button>
+          </div> 
+        </div>
 
           <div id="game-container">
-            <div>
+            <div class="stats">
               <h2>Stats</h2>
               <p>Lives: <span id="lives">♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥</span></p>
               <p>Score: <span id="score">0</span></p>
@@ -43,10 +50,11 @@
             <br />
             <button id="restart-button">Restart</button>
           </div>
-        </div>
       </div>
     </main>
     <!-- javascript goes here -->
+    <script src="js/component.js"></script>
+    <script src="js/enemy.js"></script>
     <script src="js/obstacle.js"></script>
     <script src="js/player.js"></script>
     <script src="js/game.js"></script>

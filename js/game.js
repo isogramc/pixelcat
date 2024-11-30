@@ -1,15 +1,8 @@
 class Game {
   constructor() {
-    this.startScreen = document.getElementById("game-intro");
+    this.startScreen = document.getElementById("logo-background");
     this.gameScreen = document.getElementById("game-screen");
     this.gameEndScreen = document.getElementById("game-end");
-    this.player = new Player(this.gameScreen,
-      200,
-      570,
-      87,
-      74,
-      "./images/eris_rest.png"
-    );
     this.obstacles = [];
     this.width = 500;
     this.height = 600;
@@ -18,6 +11,14 @@ class Game {
     this.lives = 3;
     this.gameIntervalId;
     this.gameLoopFrequency = Math.round(1000 / 60); // 60fps
+
+    this.player = new Player(this.gameScreen,
+      200,
+      570,
+      87,
+      74,
+      "./images/eris_rest.png"
+    );
 
     this.enemy = new Enemy(
       this.gameScreen,
@@ -53,11 +54,6 @@ class Game {
     }
   }
 
-  update() {//keep track of the different parts of the game update
-    console.log("in the update");
-    this.player.move();
-  }
-
   // Create a new method responsible for ending the game
   endGame() {
     this.player.element.remove();
@@ -73,6 +69,8 @@ class Game {
 
   update() {
     console.log("update");
+
+    this.player.move();
 
     for (let i = 0; i < this.obstacles.length; i++) {
       const obstacle = this.obstacles[i];
