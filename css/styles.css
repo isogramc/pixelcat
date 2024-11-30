@@ -50,8 +50,8 @@ h1{
    background-color: rgb(80, 80, 211);
    background-image: url("./images/PixelCat.png");
    background-repeat: no-repeat;
-  background-position: center top;
-  background-size: 500px auto;
+   background-position: center top;
+   background-size: 500px auto;
    justify-content: center;
 }
 
