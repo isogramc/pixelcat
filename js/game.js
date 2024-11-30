@@ -27,7 +27,7 @@ class Game {
       20,
       100,
       150,
-      "/images/chef_sml.png"
+      "./images/chef_sml.png"
     );
 
     this.token = new Token(
