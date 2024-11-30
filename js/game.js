@@ -3,7 +3,13 @@ class Game {
     this.startScreen = document.getElementById("game-intro");
     this.gameScreen = document.getElementById("game-screen");
     this.gameEndScreen = document.getElementById("game-end");
-    this.player = null;
+    this.player = new Player(this.gameScreen,
+      200,
+      570,
+      87,
+      74,
+      "./images/eris_rest.png"
+    );
     this.obstacles = [];
     this.width = 500;
     this.height = 600;
@@ -46,6 +52,12 @@ class Game {
       clearInterval(this.gameIntervalId);
     }
   }
+
+  update() {//keep track of the different parts of the game update
+    console.log("in the update");
+    this.player.move();
+  }
+
   // Create a new method responsible for ending the game
   endGame() {
     this.player.element.remove();
