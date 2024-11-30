@@ -33,7 +33,7 @@ h1{
    padding: 0;
    width: 100%;
    height: 1472px;
-   background: url("/images/kitchen_bg.png") no-repeat, url("/images/kitchen_bg_flipped.png") repeat-x;
+   background: url("./images/kitchen_bg.png") no-repeat, url("./images/kitchen_bg_flipped.png") repeat-x;
    background-size: 616px 936px, 616px 936px;
    background-origin: content-box, content-box;
 }
@@ -48,7 +48,7 @@ h1{
    color: white;
    border-radius: 10px;
    background-color: rgb(80, 80, 211);
-   background-image: url("/images/PixelCat.png");
+   background-image: url("./images/PixelCat.png");
    background-repeat: no-repeat;
   background-position: center top;
   background-size: 500px auto;
