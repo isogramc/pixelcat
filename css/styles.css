@@ -43,15 +43,15 @@ h1{
 #logo-background{
    position: relative;
    display: flex;
-   width: 700px;
+   width: 500px;
    height: 700px;
    color: white;
    border-radius: 10px;
    background-color: rgb(80, 80, 211);
-   background-image: url("./images/PixelCat.png");
+   background-image: url("/images/PixelCat.png");
    background-repeat: no-repeat;
    background-position: center top;
-   background-size: 500px auto;
+   background-size: 510px auto;
    justify-content: center;
 }
 
