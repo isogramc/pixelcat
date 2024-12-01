@@ -1,4 +1,4 @@
-class Token{
+class Token {
     constructor(gameScreen, left, top, width, height, imgSrc){
         this.gameScreen = gameScreen;
         this.left = left;
@@ -16,5 +16,9 @@ class Token{
         this.element.style.top = `${top}px`;
 
         this.gameScreen.appendChild(this.element);
+    }
+
+    removeToken(){
+        this.gameScreen.removeChild(this.element);
     }
 }

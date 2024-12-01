@@ -4,14 +4,20 @@ class Game {
     this.gameScreen = document.getElementById("game-screen");
     this.gameContainer = document.getElementById("game-container");
     this.gameEndScreen = document.getElementById("game-end");
+    this.leftGame = document.getElementById("game-end-game-over");
+    this.winner = document.getElementById("game-end-winner");
     this.obstacles = [];
     this.width = 500;
     this.height = 600;
     this.gameIsOver = false;
     this.score = 0;
     this.lives = 3;
+    this.tokens = 0;
+    this.door = false;
     this.gameIntervalId;
     this.gameLoopFrequency = Math.round(1000 / 60); // 60fps
+    this.tokenExists = false;
+    this.doorExists = false;
 
     this.player = new Player(this.gameScreen,
       200,
@@ -28,24 +34,6 @@ class Game {
       100,
       150,
       "./images/chef_sml.png"
-    );
-
-    this.token = new Token(
-      this.gameScreen,
-      200,
-      470,
-      24,
-      55,
-      "./images/fish.png"
-    );
-
-    this.door = new Door(
-      this.gameScreen,
-      100,
-      150,
-      100,
-      100,
-      "./images/door.png"
     );
 
   }
@@ -74,10 +62,18 @@ class Game {
     }
   }
 
+  getRandomInt(min, max) {
+    const minCeiled = Math.ceil(min);
+    const maxFloored = Math.floor(max);
+    return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The maximum is exclusive and the minimum is inclusive
+  }
+
   // Create a new method responsible for ending the game
-  endGame() {
+  endGame(check) {
     this.player.element.remove();
     this.obstacles.forEach((obstacle) => obstacle.element.remove());
+    this.token.element.remove();
+    //this.door.element.remove();
 
     this.gameIsOver = true;
 
@@ -85,18 +81,78 @@ class Game {
     this.gameScreen.style.display = "none";
     this.gameContainer.style.display = "none";
     // Show end game screen
-    this.gameEndScreen.style.display = "flex";
+   // debugger;
+    if(check){
+      this.winner.style.display = "block";
+      this.leftGame.style.display = "none";
+      this.gameEndScreen.style.display = "flex";
+    }else{
+      this.winner.style.display = "none";
+      this.leftGame.style.display = "block";
+      this.gameEndScreen.style.display = "flex";
+    }
   }
 
+
+  addToken(){
+
+    this.tokenExists = true;
+    // debugger;
+    const randomX = this.getRandomInt(30, this.width-30);
+    const randomY = this.getRandomInt(40, this.height-30);
+
+      this.token = new Token(
+      this.gameScreen,
+      randomX,
+      randomY,
+      24,
+      55,
+      "./images/fish.png"
+    );
+
+    this.addBlink(this.token.element);
+      
+}
+
+addDoor(){
+  this.doorExists = true;
+
+  const randomX = this.getRandomInt(40, this.width-30);
+  const randomY = this.getRandomInt(50, this.height-30);
+
+  this.door = new Door(
+    this.gameScreen,
+    randomX,
+    randomY,
+    100,
+    100,
+    "./images/door.png"
+  );
+
+}
+
+addBlink(element){
+  // debugger;
+  var blink_speed = 500; // every 1000 == 1 second, adjust to suit
+  var t = setInterval(function () {
+    console.log(element);
+    element.style.visibility = (element.style.visibility == 'hidden' ? '' : 'hidden');
+  }, blink_speed);
+}
+
   update() {
+
     console.log("update");
 
     this.player.move();
 
+    
+    
+
     for (let i = 0; i < this.obstacles.length; i++) {
       const obstacle = this.obstacles[i];
       obstacle.move();
-        // If the player's car collides with an obstacle
+        // If the player collides with an obstacle
         if (this.player.didCollide(obstacle)) {
           // Remove the obstacle element from the DOM
           obstacle.element.remove();
@@ -108,9 +164,6 @@ class Game {
           i--;
         } // If the obstacle is off the screen (at the bottom)
         else if (obstacle.top > this.height) {
-          // Increase the score by 1
-          this.score++;
-          document.getElementById("score").innerHTML = this.score;
           // Remove the obstacle from the DOM
           obstacle.element.remove();
           // Remove obstacle object from the array
@@ -119,14 +172,7 @@ class Game {
           i--;
         }
         document.getElementById("lives").innerHTML = this.lives;
-        document.getElementById("score").innerHTML = this.score;
-  
-      
-    }
-
-    // If the lives are 0, end the game
-    if (this.lives === 0) {
-      this.endGame();
+        
     }
 
     // Create a new obstacle based on a random probability
@@ -135,6 +181,36 @@ class Game {
       this.obstacles.push(new Obstacle(this.gameScreen));
     }
 
+      // If the lives are 0, end the game
+      if (this.lives === 0) {
+        console.log("livees = zero");
+        let boolWin = false;
+        this.endGame(boolWin);
+      }
+
+    if(!this.tokenExists&&!this.doorExists){
+      this.addToken();
+    }
+
+    if(this.player.didCollideToken(this.token)){
+      // console.log("did collide");
+      this.token.element.remove();
+      this.tokens += 1;
+      document.getElementById("score").innerHTML = this.tokens;
+      this.tokenExists = false;
+    }
+
+    if(!this.doorExists && this.tokens===5){
+     this.addDoor();
+    }
+
+    if(this.player.exited(this.door)){
+      console.log("did exit");
+      const winner = true;
+      this.endGame(winner);
+    }
+
+  
 
   }
 }
