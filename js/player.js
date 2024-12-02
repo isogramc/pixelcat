@@ -14,13 +14,23 @@ class Player {
         // Set up the default element's property values
         this.element.style.width = `${width}px`;
         this.element.style.height = `${height}px`;
+        this.start = 0;
         this.element.style.left = `${left}px`;
         this.element.style.top = `${top}px`;
     
         this.gameScreen.appendChild(this.element);
     }
 
+    flipElement(){
+      this.element.classList.add("direction-flip");
+    }
+
+    reverseFlip(){
+      this.element.classList.remove("direction-flip");
+    }
+
     move() {
+        this.start = this.left;
         // Update player position based on directionX and directionY
         this.left += this.directionX;
         this.top += this.directionY;

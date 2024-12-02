@@ -35,12 +35,14 @@ window.onload = function () {
         switch (key) {
           case "ArrowLeft":
             game.player.directionX = -1;
+            game.player.flipElement();
             break;
           case "ArrowUp":
             game.player.directionY = -1;
             break;
           case "ArrowRight":
             game.player.directionX = 1;
+            game.player.reverseFlip();
             break;
           case "ArrowDown":
             game.player.directionY = 1;

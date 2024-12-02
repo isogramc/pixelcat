@@ -161,7 +161,7 @@ addBlink(element){
     this.playEnd = false;
     this.playOnceBool = false;
     this.player.move();
-
+    
     for (let i = 0; i < this.obstacles.length; i++) {
       const obstacle = this.obstacles[i];
       obstacle.move();
