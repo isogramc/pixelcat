@@ -1,6 +1,7 @@
 window.onload = function () {
     const startButton = document.getElementById("start-button");
     const restartButton = document.getElementById("restart-button");
+    
     let game;
   
     startButton.addEventListener("click", function () {
@@ -13,6 +14,8 @@ window.onload = function () {
   
       game.start(); // added
     }
+
+    
   
     // Function that handles keydown event
     function handleKeydown(event) {
@@ -32,12 +35,14 @@ window.onload = function () {
         switch (key) {
           case "ArrowLeft":
             game.player.directionX = -1;
+            game.player.flipElement();
             break;
           case "ArrowUp":
             game.player.directionY = -1;
             break;
           case "ArrowRight":
             game.player.directionX = 1;
+            game.player.reverseFlip();
             break;
           case "ArrowDown":
             game.player.directionY = 1;
@@ -45,6 +50,8 @@ window.onload = function () {
         }
       }
     }
+
+    
   
     // Add the handleKeydown function as an event listener for the keydown event
     window.addEventListener("keydown", handleKeydown);

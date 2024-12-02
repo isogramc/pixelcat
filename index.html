@@ -23,8 +23,11 @@
             <img src="./images/logo.png" alt="" class="logo-img" />
             <br />
             <div class="game-intro-text">
-              <p>PixelCat is trying to escape from the mad chef's kitchen. 
-                Use the arrow keys to avoid the obstacles and to collect tokens that opens the door for him.</p>
+              <p>The PixelCat must escape Mayhem Chef's kitchen: 
+                Use the arrow keys to avoid obstacles.
+                Collect (flashing) treats to accumulate quest points...
+                Finally - You may find the door and exit (once all quest items 
+                has been collected)!</p>
             <img src="./images/arrows.png" alt="" class="arrows-img" />
           </div>
             <button id="start-button">Start Game</button>
@@ -35,7 +38,7 @@
             <div class="stats">
               <h2>Stats</h2>
               <p>Lives: <span id="lives">♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥</span></p>
-              <p>Score: <span id="score">0</span></p>
+              <p>Inventory: <span id="score">You have nothing in inventory</span></p>
             </div>
             <!-- #game-screen is initially hidden using CSS style display: none -->
             <div id="game-screen"></div>
@@ -66,5 +69,6 @@
     <script src="js/player.js"></script>
     <script src="js/game.js"></script>
     <script src="js/script.js"></script>
+    <script src="js/sound.js"></script>
   </body>
 </html>
