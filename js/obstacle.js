@@ -5,8 +5,8 @@ class Obstacle extends Component {
             Math.floor(Math.random() * 300 + 70),
             0,
             100,
-            150,
-            "./images/pan.png"
+            100,
+            "./images/pixel-pan.png"
           );
       }
     
