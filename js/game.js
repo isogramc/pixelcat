@@ -1,3 +1,5 @@
+
+
 class Game {
   constructor() {
     this.startScreen = document.getElementById("logo-background");
@@ -6,6 +8,7 @@ class Game {
     this.gameEndScreen = document.getElementById("game-end");
     this.leftGame = document.getElementById("game-end-game-over");
     this.winner = document.getElementById("game-end-winner");
+    this.whichToken = document.getElementById("next-token");
     this.obstacles = [];
     this.width = 500;
     this.height = 600;
@@ -18,8 +21,14 @@ class Game {
     this.gameLoopFrequency = Math.round(1000 / 60); // 60fps
     this.tokenExists = false;
     this.doorExists = false;
+    this.pickupMp3 = new Sound("./audio/item-pick-up-38258.mp3");
+    this.gameOverMp3 = new Sound("./audio/080205_life-lost-game-over-89697.mp3");
+    this.goVoiceMp3 = new Sound("./audio/game-over-31-179699.mp3");
+    this.surpriseMp3 = new Sound("./audio/surprise-sound-effect-99300.mp3");
+    this.exitMp3 = new Sound("./audio/8bit-music-for-game-68698.mp3");
 
-    this.player = new Player(this.gameScreen,
+    this.player = new Player(
+      this.gameScreen,
       200,
       570,
       87,
@@ -34,7 +43,7 @@ class Game {
       100,
       150,
       "./images/chef_sml.png"
-    );
+    ); 
 
   }
 
@@ -81,7 +90,8 @@ class Game {
     this.gameScreen.style.display = "none";
     this.gameContainer.style.display = "none";
     // Show end game screen
-   // debugger;
+    //debugger;
+
     if(check){
       this.winner.style.display = "block";
       this.leftGame.style.display = "none";
@@ -93,6 +103,11 @@ class Game {
     }
   }
 
+  playItOnce(){
+    this.gameOverMp3.play();
+    this.goVoiceMp3.play();
+  }
+
 
   addToken(){
 
@@ -100,14 +115,18 @@ class Game {
     // debugger;
     const randomX = this.getRandomInt(30, this.width-30);
     const randomY = this.getRandomInt(40, this.height-30);
+    const link = ["pixel-cupcake.png", "pixel-yarn.png", "pixel-fish.png", "fish.png"][Math.floor(Math.random() * 3)];
+    const randomToken = `./images/${link}`;
+    let a = link.split(".")[0];
+    this.whichToken.innerHTML = a.split("-")[1];
 
       this.token = new Token(
       this.gameScreen,
       randomX,
       randomY,
-      24,
+      34,
       55,
-      "./images/fish.png"
+      randomToken
     );
 
     this.addBlink(this.token.element);
@@ -117,8 +136,8 @@ class Game {
 addDoor(){
   this.doorExists = true;
 
-  const randomX = this.getRandomInt(40, this.width-30);
-  const randomY = this.getRandomInt(50, this.height-30);
+  const randomX = this.getRandomInt(140, this.width-80);
+  const randomY = this.getRandomInt(50, this.height-80);
 
   this.door = new Door(
     this.gameScreen,
@@ -144,21 +163,24 @@ addBlink(element){
 
     console.log("update");
 
+    this.playEnd = false;
+    this.playOnceBool = false;
     this.player.move();
-
     
-    
-
     for (let i = 0; i < this.obstacles.length; i++) {
       const obstacle = this.obstacles[i];
       obstacle.move();
         // If the player collides with an obstacle
         if (this.player.didCollide(obstacle)) {
+          this.playOnceBool = true;
           // Remove the obstacle element from the DOM
           obstacle.element.remove();
           // Remove obstacle object from the array
           this.obstacles.splice(i, 1);
           // Reduce player's lives by 1
+          
+          this.surpriseMp3.play();
+         
           this.lives--;
           // Update the counter variable to account for the removed obstacle
           i--;
@@ -186,6 +208,10 @@ addBlink(element){
         console.log("livees = zero");
         let boolWin = false;
         this.endGame(boolWin);
+        this.lives = -1;
+        if(this.lives===-1){
+          this.playItOnce();
+        }
       }
 
     if(!this.tokenExists&&!this.doorExists){
@@ -193,7 +219,9 @@ addBlink(element){
     }
 
     if(this.player.didCollideToken(this.token)){
-      // console.log("did collide");
+      console.log("did collide");
+      //debugger;
+      this.pickupMp3.play();
       this.token.element.remove();
       this.tokens += 1;
       document.getElementById("score").innerHTML = this.tokens;
@@ -207,10 +235,10 @@ addBlink(element){
     if(this.player.exited(this.door)){
       console.log("did exit");
       const winner = true;
+      this.exitMp3.play();
       this.endGame(winner);
     }
 
-  
-
   }
+
 }

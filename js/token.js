@@ -21,4 +21,5 @@ class Token {
     removeToken(){
         this.gameScreen.removeChild(this.element);
     }
+
 }
