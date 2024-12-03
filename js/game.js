@@ -8,6 +8,7 @@ class Game {
     this.gameEndScreen = document.getElementById("game-end");
     this.leftGame = document.getElementById("game-end-game-over");
     this.winner = document.getElementById("game-end-winner");
+    this.whichToken = document.getElementById("next-token");
     this.obstacles = [];
     this.width = 500;
     this.height = 600;
@@ -114,7 +115,10 @@ class Game {
     // debugger;
     const randomX = this.getRandomInt(30, this.width-30);
     const randomY = this.getRandomInt(40, this.height-30);
-    const randomToken = `./images/${["pixel-cupcake.png", "pixel-yarn.png", "pixel-fish.png", "fish.png"][Math.floor(Math.random() * 3)]}`;
+    const link = ["pixel-cupcake.png", "pixel-yarn.png", "pixel-fish.png", "fish.png"][Math.floor(Math.random() * 3)];
+    const randomToken = `./images/${link}`;
+    let a = link.split(".")[0];
+    this.whichToken.innerHTML = a.split("-")[1];
 
       this.token = new Token(
       this.gameScreen,
@@ -132,8 +136,8 @@ class Game {
 addDoor(){
   this.doorExists = true;
 
-  const randomX = this.getRandomInt(40, this.width-30);
-  const randomY = this.getRandomInt(50, this.height-30);
+  const randomX = this.getRandomInt(140, this.width-80);
+  const randomY = this.getRandomInt(50, this.height-80);
 
   this.door = new Door(
     this.gameScreen,
