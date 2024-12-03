@@ -6,8 +6,10 @@ class Obstacle extends Component {
             0,
             100,
             100,
-            "./images/pixel-pan.png"
+            `./images/${["pixel-pan.png", "pixel-spatula.png", "pixel-whisk.png"][Math.floor(Math.random() * 3)]}`
+        
           );
+
       }
     
       move() {
@@ -16,4 +18,6 @@ class Obstacle extends Component {
         // Update the obstacle's position on the screen
         this.updatePosition();
       }
+
+
 }

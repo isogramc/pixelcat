@@ -114,14 +114,15 @@ class Game {
     // debugger;
     const randomX = this.getRandomInt(30, this.width-30);
     const randomY = this.getRandomInt(40, this.height-30);
+    const randomToken = `./images/${["pixel-cupcake.png", "pixel-yarn.png", "pixel-fish.png", "fish.png"][Math.floor(Math.random() * 3)]}`;
 
       this.token = new Token(
       this.gameScreen,
       randomX,
       randomY,
-      24,
+      34,
       55,
-      "./images/fish.png"
+      randomToken
     );
 
     this.addBlink(this.token.element);
