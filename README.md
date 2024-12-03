@@ -2,7 +2,7 @@
 
 ![PixelCat](https://github.com/user-attachments/assets/b36e7852-c9b7-47fd-9e78-69e3e7eeac93)
 
-PixelCat is a platform escape game designed and Developed by Andres Ochoa and Trix Mostert for Ironhack's Project in Week 8 of the October intake. :+1:
+PixelCat is a platform escape game designed and Developed by Andres Ochoa and Trix Mostert :+1:
 ---
 
 The MVP is a classic 80's arcade style game with the hero (pixelcat) having to collect items (inventory) to escape the kitchen that belongs to the villain. He also has to dodge obstacles. :laughing:
