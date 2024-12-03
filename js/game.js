@@ -63,7 +63,7 @@ class Game {
   }
 
   gameLoop() {
-    console.log("game loop");
+    //console.log("game loop");
     this.update();
 
     if (this.gameIsOver === true) {
@@ -154,14 +154,14 @@ addBlink(element){
   // debugger;
   var blink_speed = 500; // every 1000 == 1 second, adjust to suit
   var t = setInterval(function () {
-    console.log(element);
+    // console.log(element);
     element.style.visibility = (element.style.visibility == 'hidden' ? '' : 'hidden');
   }, blink_speed);
 }
 
   update() {
 
-    console.log("update");
+    // console.log("update");
 
     this.playEnd = false;
     this.playOnceBool = false;
@@ -205,7 +205,7 @@ addBlink(element){
 
       // If the lives are 0, end the game
       if (this.lives === 0) {
-        console.log("livees = zero");
+        // console.log("livees = zero");
         let boolWin = false;
         this.endGame(boolWin);
         this.lives = -1;
@@ -219,7 +219,7 @@ addBlink(element){
     }
 
     if(this.player.didCollideToken(this.token)){
-      console.log("did collide");
+      // console.log("did collide");
       //debugger;
       this.pickupMp3.play();
       this.token.element.remove();
@@ -232,13 +232,14 @@ addBlink(element){
      this.addDoor();
     }
 
-    if(this.player.exited(this.door)){
-      console.log("did exit");
-      const winner = true;
-      this.exitMp3.play();
-      this.endGame(winner);
+    if(this.doorExists){
+      if(this.player.exited(this.door)){
+        // console.log("did exit");
+        const winner = true;
+        this.exitMp3.play();
+        this.endGame(winner);
+      }
     }
-
   }
 
 }
