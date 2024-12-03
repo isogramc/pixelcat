@@ -84,7 +84,7 @@ class Player {
       didCollideToken(token) {
         const playerRect = this.element.getBoundingClientRect();
         const tokenRect = token.element.getBoundingClientRect();
-        console.log(tokenRect);
+        // console.log(tokenRect);
         if (
           playerRect.left < tokenRect.right &&
           playerRect.right > tokenRect.left &&
@@ -98,9 +98,12 @@ class Player {
       }
 
       exited(door){
+        if(door===undefined){
+          return;
+        }
         const playerRect = this.element.getBoundingClientRect();
         const doorRect = door.element.getBoundingClientRect();
-        console.log(doorRect);
+        // console.log(doorRect);
         if (
           playerRect.left < doorRect.right &&
           playerRect.right > doorRect.left &&
