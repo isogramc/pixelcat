@@ -38,7 +38,10 @@
             <div class="stats">
               <h2>Stats</h2>
               <p>Lives: <span id="lives">♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥ ♥</span></p>
-              <p>Inventory: <span id="score">You have nothing in inventory</span></p>
+              <div class="score">
+                <div>Collected:</div> 
+                <div id="score"><span >You have not collected anything</span></div>
+              </div>
               <h2>Next Item:</h2>
               <h3 id="next-token" class="pixelify-sans-headers"></h3>
             </div>
@@ -62,11 +65,12 @@
         </div>
       </div>
     </main>
+    
     <!-- javascript goes here -->
-     <script src="js/door.js"></script>
-     <script src="js/token.js"></script>
     <script src="js/component.js"></script>
-    <script src="js/enemy.js"></script>
+    <script src="js/door.js"></script>
+    <script src="js/token.js"></script>
+    <script src="js/character.js"></script>
     <script src="js/obstacle.js"></script>
     <script src="js/player.js"></script>
     <script src="js/game.js"></script>

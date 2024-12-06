@@ -1,5 +1,3 @@
-
-
 class Game {
   constructor() {
     this.startScreen = document.getElementById("logo-background");
@@ -14,11 +12,15 @@ class Game {
     this.height = 600;
     this.gameIsOver = false;
     this.score = 0;
-    this.lives = 3;
+    this.lives = 9;
     this.tokens = 0;
-    this.door = false;
+    this.door = undefined;
     this.gameIntervalId;
+    this.blinkInterValId;
+    this.minterval;
+    this.timeoutID;
     this.gameLoopFrequency = Math.round(1000 / 60); // 60fps
+    this.token = undefined;
     this.tokenExists = false;
     this.doorExists = false;
     this.pickupMp3 = new Sound("./audio/item-pick-up-38258.mp3");
@@ -26,6 +28,8 @@ class Game {
     this.goVoiceMp3 = new Sound("./audio/game-over-31-179699.mp3");
     this.surpriseMp3 = new Sound("./audio/surprise-sound-effect-99300.mp3");
     this.exitMp3 = new Sound("./audio/8bit-music-for-game-68698.mp3");
+    this.imcounter = 0;
+    this.positionEnemy = 0;
 
     this.player = new Player(
       this.gameScreen,
@@ -36,13 +40,13 @@ class Game {
       "./images/eris_rest.png"
     );
 
-    this.enemy = new Enemy(
+    this.enemyA = new Character(
       this.gameScreen,
-      200,
+      20,
       20,
       100,
       150,
-      "./images/chef_sml.png"
+      "./images/a.png"
     ); 
 
   }
@@ -82,7 +86,6 @@ class Game {
     this.player.element.remove();
     this.obstacles.forEach((obstacle) => obstacle.element.remove());
     this.token.element.remove();
-    //this.door.element.remove();
 
     this.gameIsOver = true;
 
@@ -90,7 +93,6 @@ class Game {
     this.gameScreen.style.display = "none";
     this.gameContainer.style.display = "none";
     // Show end game screen
-    //debugger;
 
     if(check){
       this.winner.style.display = "block";
@@ -108,38 +110,35 @@ class Game {
     this.goVoiceMp3.play();
   }
 
-
   addToken(){
-
+    // add a random token to gameplay
     this.tokenExists = true;
-    // debugger;
-    const randomX = this.getRandomInt(30, this.width-30);
-    const randomY = this.getRandomInt(40, this.height-30);
-    const link = ["pixel-cupcake.png", "pixel-yarn.png", "pixel-fish.png", "fish.png"][Math.floor(Math.random() * 3)];
-    const randomToken = `./images/${link}`;
-    let a = link.split(".")[0];
+    const randomX = this.getRandomInt(20, this.width-30);
+    const randomY = this.getRandomInt(90, this.height-30);
+    const link = [["pixel-cupcake.png", 45], ["pixel-yarn.png", 45], ["pixel-fish.png", 45], ["pixel-bone.png", 18]][Math.floor(Math.random() * 4)];
+    let rToken = link[0];
+    const randomToken = `./images/${ rToken }`;
+    let a = link[0].split(".")[0];
     this.whichToken.innerHTML = a.split("-")[1];
-
       this.token = new Token(
       this.gameScreen,
       randomX,
       randomY,
-      34,
-      55,
+      link[1],
+      45,
       randomToken
     );
-
-    this.addBlink(this.token.element);
-      
+    this.addBlink(this.token.element);  
 }
 
 addDoor(){
+  //this method adds a door randomly in a random location on the game screen when all tokens have been collected
   this.doorExists = true;
 
   const randomX = this.getRandomInt(140, this.width-80);
   const randomY = this.getRandomInt(50, this.height-80);
 
-  this.door = new Door(
+  this.door = new Component(
     this.gameScreen,
     randomX,
     randomY,
@@ -147,25 +146,48 @@ addDoor(){
     100,
     "./images/door.png"
   );
-
 }
 
 addBlink(element){
-  // debugger;
   var blink_speed = 500; // every 1000 == 1 second, adjust to suit
-  var t = setInterval(function () {
-    // console.log(element);
+  this.blinkIntervalId = setInterval(function () {
     element.style.visibility = (element.style.visibility == 'hidden' ? '' : 'hidden');
   }, blink_speed);
 }
 
+  stopAndAnimate(){
+    this.enemyA.element.remove();
+
+    this.enemyB = new Character(
+      this.gameScreen,
+      200,
+      20,
+      100,
+      150,
+      "./images/animationchef.gif"
+    ); 
+    //this.delayTimer();
+  }
+
+  delayTimer() {
+    this.timeoutID = setTimeout(()=>{
+      this.enemyB.element.style.display = "block";
+      this.enemyA.element.style.display = "none";
+    }, 2000);
+  }
+
   update() {
-
-    // console.log("update");
-
     this.playEnd = false;
     this.playOnceBool = false;
     this.player.move();
+
+    // enemy moves
+    this.positionEnemy = this.enemyA.moveLinearRight();
+
+    if(this.positionEnemy===200){
+     // enemy animates
+     this.stopAndAnimate();
+    }
     
     for (let i = 0; i < this.obstacles.length; i++) {
       const obstacle = this.obstacles[i];
@@ -193,8 +215,11 @@ addBlink(element){
           // Update the counter variable to account for the removed obstacle
           i--;
         }
-        document.getElementById("lives").innerHTML = this.lives;
-        
+        let hearts = "";
+        for(let i=0; i<this.lives; i++){
+          hearts += "♥";
+        }
+        document.getElementById("lives").innerHTML = hearts;  
     }
 
     // Create a new obstacle based on a random probability
@@ -205,7 +230,6 @@ addBlink(element){
 
       // If the lives are 0, end the game
       if (this.lives === 0) {
-        // console.log("livees = zero");
         let boolWin = false;
         this.endGame(boolWin);
         this.lives = -1;
@@ -219,12 +243,18 @@ addBlink(element){
     }
 
     if(this.player.didCollideToken(this.token)){
-      // console.log("did collide");
-      //debugger;
+      // play sound on collecting token
       this.pickupMp3.play();
       this.token.element.remove();
       this.tokens += 1;
-      document.getElementById("score").innerHTML = this.tokens;
+      let icon = document.createElement("img");
+      icon.setAttribute("src", this.token.element.src);
+      icon.setAttribute("height", this.token.height);
+      icon.setAttribute("width", this.token.width);
+      if(this.tokens === 1){
+        document.getElementById("score").innerText = "";
+      }
+      document.getElementById("score").append(icon);
       this.tokenExists = false;
     }
 
@@ -234,12 +264,10 @@ addBlink(element){
 
     if(this.doorExists){
       if(this.player.exited(this.door)){
-        // console.log("did exit");
         const winner = true;
         this.exitMp3.play();
         this.endGame(winner);
       }
     }
   }
-
 }

@@ -110,6 +110,7 @@ h1{
 
 #game-container {
    width: 100vw;
+   height: 35vh;
    display: none;
    flex-direction: row;
    justify-content: center;
@@ -122,7 +123,7 @@ h1{
    padding: 20px 0px;
    overflow: hidden;
    position: relative;
-   background-color: black;
+   background-color: rgba(2, 2, 2, 0.9);
  }
 
  body button {
@@ -137,7 +138,7 @@ h1{
  }
  #game-container .stats{
    padding: 15px;
-   min-width: 190px;
+   min-width: 300px;
    background-color: rgb(68, 51, 122);
    color: white;
  }
@@ -148,6 +149,14 @@ h1{
    align-items: flex-end;
    justify-content: flex-end;
  }
+
+.score{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
  #game-intro button{
    align-self: center;
  }
@@ -167,3 +176,12 @@ h1{
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
  }
+
+ .moveToCenter{
+  animation: chefMoveToCenter 10s ease-in;
+ }
+
+ @keyframes chefMoveToCenter {
+  from {start: 20px;}
+  to {left: 200px;}
+}
