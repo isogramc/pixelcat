@@ -14,6 +14,7 @@ class Game {
     this.score = 0;
     this.lives = 9;
     this.tokens = 0;
+    this.wordel = document.createElement("h1");
     this.door = undefined;
     this.gameIntervalId;
     this.blinkInterValId;
@@ -39,6 +40,7 @@ class Game {
       74,
       "./images/eris_rest.png"
     );
+    this.player.element.classList.add("img-lift");
 
     this.enemyA = new Character(
       this.gameScreen,
@@ -59,6 +61,10 @@ class Game {
     this.startScreen.style.display = "none";
     this.gameScreen.style.display = "block";
     this.gameContainer.style.display = "flex";
+
+    this.wordel.classList.add("pixelify-sans-headers");
+    this.wordel.classList.add("word-color");
+    this.wordel.setAttribute("id", "wordel");
 
     this.gameIntervalId = setInterval(() => {
       // console.log("starts game loop");
@@ -115,7 +121,7 @@ class Game {
     this.tokenExists = true;
     const randomX = this.getRandomInt(20, this.width-30);
     const randomY = this.getRandomInt(90, this.height-30);
-    const link = [["pixel-cupcake.png", 45], ["pixel-yarn.png", 45], ["pixel-fish.png", 45], ["pixel-bone.png", 18]][Math.floor(Math.random() * 4)];
+    const link = [["pixel-cake.png", 45], ["pixel-yarn.png", 45], ["pixel-fish.png", 45], ["pixel-bone.png", 18]][Math.floor(Math.random() * 4)];
     let rToken = link[0];
     const randomToken = `./images/${ rToken }`;
     let a = link[0].split(".")[0];
@@ -128,6 +134,7 @@ class Game {
       45,
       randomToken
     );
+    this.token.element.classList.add("img-lift");
     this.addBlink(this.token.element);  
 }
 
@@ -174,6 +181,17 @@ addBlink(element){
       this.enemyB.element.style.display = "block";
       this.enemyA.element.style.display = "none";
     }, 2000);
+  }
+
+  flashCanvasWord(link){
+    let alink = link;
+    let first = alink.split("/");
+    let linker = first[first.length-1].split(".")[0];
+    let eaten = linker.split("-")[1];
+    this.wordel.innerHTML = "my " + eaten;
+    
+    
+    this.gameScreen.appendChild(this.wordel);
   }
 
   update() {
@@ -245,6 +263,8 @@ addBlink(element){
     if(this.player.didCollideToken(this.token)){
       // play sound on collecting token
       this.pickupMp3.play();
+      // add word to canvas it must stay for 2 seconds and then disappear 
+      this.flashCanvasWord(this.token.element.src);
       this.token.element.remove();
       this.tokens += 1;
       let icon = document.createElement("img");
