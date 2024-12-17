@@ -7,7 +7,7 @@ PixelCat is a platform escape game designed and Developed by Andres Ochoa and Tr
 
 The MVP is a classic 80's arcade style game with the hero (pixelcat) having to collect items (inventory) to escape the kitchen that belongs to the villain. He also has to dodge obstacles. :laughing:
 
-![Presentation](https://docs.google.com/presentation/d/1BywB33ZspVks--RwLcmGIeE8gOzZUilR/edit?usp=sharing&ouid=107856449993509552262&rtpof=true&sd=true)
+[Presentation](https://docs.google.com/presentation/d/1BywB33ZspVks--RwLcmGIeE8gOzZUilR/edit?usp=sharing&ouid=107856449993509552262&rtpof=true&sd=true)
 ---
 
 The Code was written in Javascript, HTML and CSS and it is playable in the browser.
